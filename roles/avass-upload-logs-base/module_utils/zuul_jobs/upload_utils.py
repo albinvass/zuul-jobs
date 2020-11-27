@@ -144,7 +144,7 @@ class GZIPCompressedStream(io.RawIOBase):
         self._compressed_stream.seek(0)
         self.count = 0
 
-    def read(self, length):
+    def read(self, length=-1):
         r = super().read(length)
         self.count += len(r)
         return r
