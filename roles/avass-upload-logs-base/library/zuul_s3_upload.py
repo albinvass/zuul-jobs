@@ -223,11 +223,7 @@ def run(bucket, public, files, endpoint=None,
                             aws_secret_key=aws_secret_key)
         upload_failures = uploader.upload(file_list)
 
-        url = uploader.url
-        if indexes:
-            url = os.path.join(url, 'index.html')
-
-        return url, upload_failures
+        return uploader.url, upload_failures
 
 
 def ansible_main():
