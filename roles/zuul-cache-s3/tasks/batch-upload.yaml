@@ -1,0 +1,25 @@
+- name: Async upload
+  command: >-
+    curl
+    {% for field, value in zj_artifact.value.fields.items() %}
+    -F "{{ field }}={{ value }}"
+    {% endfor %}
+    -F "file=@{{ zuul_cache_dir }}/{{ zj_artifact.key }}"
+    {{ zj_artifact.value.url }}
+  async: 60
+  poll: 0
+  loop: "{{ zj_batched_artifacts }}"
+  loop_control:
+    loop_var: zj_artifact
+  register: _async_artifact_uploads
+
+- name: Check upload status
+  async_status:
+    jid: "{{ zj_async_artifact_upload.ansible_job_id }}"
+  loop: "{{ _async_artifact_uploads.results }}"
+  loop_control:
+    loop_var: zj_async_artifact_upload
+  register: _async_poll_results
+  until: _async_poll_results.finished
+  retries: 30
+  delay: 2

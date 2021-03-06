@@ -1,0 +1,1 @@
+zuul_cache_dir: "{{ ansible_user_dir }}/zuul-cache"

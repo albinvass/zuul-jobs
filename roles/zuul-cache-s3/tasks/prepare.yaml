@@ -1,0 +1,15 @@
+- name: Prepare urls for artifacts
+  delegate_to: localhost
+  zuul_cache_s3_urls:
+    zuul: "{{ zuul }}"
+    bucket: "{{ zuul_cache.bucket }}"
+    expiry: "{{ zuul_cache.url_expiry | default(omit) }}"
+    aws_access_key: "{{ zuul_cache.access_key | default(omit) }}"
+    aws_secret_key: "{{ zuul_cache.secret_key | default(omit) }}"
+    s3_url: "{{ zuul_cache.url | default(omit) }}"
+  register: _zuul_cache_s3_artifact_urls
+
+- name: Set cached artifacts fact
+  set_fact:
+    cacheable: true
+    zuul_cache_s3_artifact_urls: "{{ _zuul_cache_s3_artifact_urls.urls | default({}) }}"

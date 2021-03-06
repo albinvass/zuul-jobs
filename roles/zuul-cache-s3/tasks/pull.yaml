@@ -1,0 +1,11 @@
+- name: Ensure destination exists
+  file:
+    path: "{{ zuul_cache_dest }}"
+    state: directory
+    mode: 0755
+
+- name: Unarchive artifact from s3 cache
+  unarchive:
+    src: "{{ zuul_cache_s3_artifact_urls[zuul_cache_name + '.tar.gz'] }}"
+    dest: "{{ zuul_cache_dest }}"
+    remote_src: true

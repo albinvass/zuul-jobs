@@ -1,0 +1,12 @@
+- name: Ensure Zuul Cache staging directory
+  file:
+    state: directory
+    path: "{{ zuul_cache_dir }}"
+    mode: 0755
+
+- name: Archive artifact to local cache
+  archive:
+    dest: "{{ zuul_cache_dir }}/{{ zuul_cache_name }}.tar.gz"
+    path: "{{ zuul_cache_src }}"
+    force_archive: true
+    mode: 0755

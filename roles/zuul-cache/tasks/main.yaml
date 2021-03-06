@@ -1,0 +1,4 @@
+- name: Include backend specific role
+  include_role:
+    name: zuul-cache-{{ zuul_cache_backend }}
+    tasks_from: "{{ zuul_cache_mode }}.yaml"
