@@ -16,8 +16,10 @@
     aws_secret_key: "{{ zuul_cache.secret_key | default(omit) }}"
     s3_url: "{{ zuul_cache.url | default(omit) }}"
   register: _zuul_cache_s3_artifact_urls
+  no_log: true
 
 - name: Upload artifacts
+  no_log: true
   include_tasks: batch-upload.yaml
   loop: "{{ _zuul_cache_s3_artifact_urls.urls | dict2items | batch(10) | list }}"
   loop_control:

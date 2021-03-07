@@ -1,4 +1,5 @@
 - name: Async upload
+  no_log: true
   command: >-
     curl
     {% for field, value in zj_artifact.value.fields.items() %}
@@ -14,6 +15,7 @@
   register: _async_artifact_uploads
 
 - name: Check upload status
+  no_log: true
   async_status:
     jid: "{{ zj_async_artifact_upload.ansible_job_id }}"
   loop: "{{ _async_artifact_uploads.results }}"
