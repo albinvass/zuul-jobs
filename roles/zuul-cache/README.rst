@@ -58,18 +58,25 @@ the ``update`` stage in a post-review pipeline.
    Path to a directory where to the artifact should be unarchived to
    when used with `pull`.
 
+.. zuul:rolevar:: zuul_cache_s3_compression_level
+   :type: string
+   :default: "-6"
+
+   Configures the compression level gzip will use.
+
+.. zuul:rolevar:: zuul_cache_backend
+   :type: string
+
+   Backend that should be used to store artifacts.
+
+   Available backends are:
+
+   - s3
+
 .. zuul:rolevar:: zuul_cache
    :type: dict
 
    Complex argument which contains information on how to upload and configure the cache.
-   It is expected that this argument comes from a `Secret`. See backend specific documentation
-   for further fields that can be set.
+   It is expected that this argument comes from a `Secret`.
+   See backend specific documentation for which fields that can be set.
 
-   .. zuul:rolevar:: backend
-      :type: string
-
-      Backend that should be used to store artifacts.
-
-      Available backends are:
-
-      - s3

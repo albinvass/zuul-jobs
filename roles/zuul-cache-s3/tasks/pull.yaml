@@ -7,5 +7,7 @@
 - name: Unarchive artifact from s3 cache
   unarchive:
     src: "{{ zuul_cache_s3_artifact_urls[zuul_cache_name + '.tar.gz'] }}"
-    dest: "{{ zuul_cache_dest }}"
+    dest: >-
+      {{ zuul_cache_dest.startswith('/')
+         | ternary(zuul_cache_dest, ansible_user_dir + '/' + zuul_cache_dest) }}
     remote_src: true

@@ -10,3 +10,5 @@
     path: "{{ zuul_cache_src }}"
     force_archive: true
     mode: 0755
+  environment:
+    GZIP: "{{ zuul_cache_compression_level | default('-6') }}"
